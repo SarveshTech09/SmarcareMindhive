@@ -109,7 +109,7 @@ export default function NewEntry() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6">
+            <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                   <Pill className="w-6 h-6 text-blue-600" />
@@ -135,7 +135,7 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-40 flex items-center justify-center">
+              <div className="h-44 flex items-center justify-center">
                 <img
                   src="https://images.pexels.com/photos/3683042/pexels-photo-3683042.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Medicine"
@@ -154,7 +154,7 @@ export default function NewEntry() {
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6">
+            <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                   <Scale className="w-6 h-6 text-blue-600" />
@@ -182,7 +182,7 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-40 flex items-center justify-center">
+              <div className="h-44 flex items-center justify-center">
                 <img
                   src="https://images.pexels.com/photos/6740823/pexels-photo-6740823.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Weight tracking"
@@ -201,7 +201,7 @@ export default function NewEntry() {
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6">
+            <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                   <Activity className="w-6 h-6 text-blue-600" />
@@ -229,7 +229,7 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-40 flex items-center justify-center">
+              <div className="h-44 flex items-center justify-center">
                 <img
                   src="https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Exercise"
@@ -248,7 +248,7 @@ export default function NewEntry() {
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6">
+            <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-red-600" />
@@ -276,7 +276,7 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-40 flex items-center justify-center">
+              <div className="h-44 flex items-center justify-center">
                 <img
                   src="https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Side effects"

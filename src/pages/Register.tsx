@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, AlertCircle, ChevronRight, CheckCircle } from 'lucide-react';
+import { Heart, AlertCircle, ChevronRight } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 
@@ -10,6 +10,7 @@ export default function Register() {
   const [step, setStep] = useState<RegistrationStep>('account');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
@@ -100,33 +101,65 @@ export default function Register() {
         }
       }
 
-      setStep('complete');
-      setTimeout(() => navigate('/'), 2000);
+      // Sign in
+      await supabase.auth.signInWithPassword({
+        email: accountData.email,
+        password: accountData.password,
+      });
+      
+      // Set redirecting FIRST to hide form immediately
+      setRedirecting(true);
+      
+      // Wait a bit for auth state and then navigate to appropriate dashboard
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Direct navigation to role-specific dashboard
+      const dashboardRoutes = {
+        patient: '/patient/dashboard',
+        doctor: '/doctor/dashboard',
+        admin: '/admin/dashboard'
+      };
+      
+      navigate(dashboardRoutes[accountData.role as keyof typeof dashboardRoutes]);
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
+      setRedirecting(false);
     } finally {
       setLoading(false);
     }
   };
 
-  if (step === 'complete') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-cyan-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-10 text-center max-w-md border border-slate-200">
-          <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-            <CheckCircle className="w-10 h-10 text-white" />
-          </div>
-          <h2 className="text-3xl font-bold text-slate-900 mb-3">Welcome Aboard!</h2>
-          <p className="text-slate-600 text-lg mb-2">Your account has been created successfully.</p>
-          <p className="text-slate-500 text-sm">You can now start tracking your health journey.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-cyan-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
+    <>
+      {/* Hidden div to keep component mounted */}
+      <div className="hidden">keeping-auth-alive</div>
+      
+      {/* Full screen overlay - appears immediately with CSS */}
+      {redirecting && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgb(241, 245, 249)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div className="text-center">
+            <div className="w-20 h-20 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Welcome to GlucoTrax!</h2>
+            <p className="text-slate-600 text-lg">Redirecting to your dashboard...</p>
+          </div>
+        </div>
+      )}
+      
+      {/* Main register form - hidden when redirecting */}
+      <div style={{ opacity: redirecting ? 0 : 1, pointerEvents: redirecting ? 'none' : 'auto' }}>
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-cyan-100 flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl">
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-slate-200">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-gradient-to-br from-sky-400 to-blue-600 p-4 rounded-2xl shadow-lg">
@@ -362,19 +395,21 @@ export default function Register() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || redirecting}
                 className="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-semibold text-white disabled:opacity-50 shadow-sm transition"
               >
-                {loading ? 'Creating Account...' : 'Complete Registration'}
+                {loading ? 'Creating Account...' : redirecting ? 'Redirecting to Dashboard...' : 'Complete Registration'}
               </button>
 
-              <button
-                type="button"
-                onClick={() => setStep('account')}
-                className="w-full text-gray-600 hover:text-gray-900 py-2 text-sm transition"
-              >
-                Back to Account Details
-              </button>
+              {!redirecting && (
+                <button
+                  type="button"
+                  onClick={() => setStep('account')}
+                  className="w-full text-gray-600 hover:text-gray-900 py-2 text-sm transition"
+                >
+                  Back to Account Details
+                </button>
+              )}
             </form>
           )}
 
@@ -389,5 +424,7 @@ export default function Register() {
         </div>
       </div>
     </div>
+      </div>
+    </>
   );
 }
