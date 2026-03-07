@@ -137,7 +137,7 @@ export default function NewEntry() {
 
               <div className="h-44 flex items-center justify-center">
                 <img
-                  src="https://images.pexels.com/photos/3683042/pexels-photo-3683042.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/208512/pexels-photo-208512.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Medicine"
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -184,7 +184,7 @@ export default function NewEntry() {
 
               <div className="h-44 flex items-center justify-center">
                 <img
-                  src="https://images.pexels.com/photos/6740823/pexels-photo-6740823.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&w=400"
                   alt="Weight tracking"
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -231,7 +231,7 @@ export default function NewEntry() {
 
               <div className="h-44 flex items-center justify-center">
                 <img
-                  src="https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Exercise"
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -278,7 +278,7 @@ export default function NewEntry() {
 
               <div className="h-44 flex items-center justify-center">
                 <img
-                  src="https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/6823568/pexels-photo-6823568.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Side effects"
                   className="w-full h-full object-cover rounded-lg"
                 />
