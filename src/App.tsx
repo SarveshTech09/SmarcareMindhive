@@ -7,7 +7,8 @@ import PatientNewEntry from './pages/patient/NewEntry';
 import PatientHistory from './pages/patient/History';
 import DoctorDashboard from './pages/doctor/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
-import { LogOut, LayoutDashboard, Plus, History } from 'lucide-react';
+import { LogOut, LayoutDashboard, Plus, History, User, ChevronDown } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 
 function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode; allowedRoles?: string[] }) {
   const { user, profile, loading } = useAuth();
@@ -20,7 +21,7 @@ function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode;
           <p className="text-gray-600">Loading...</p>
         </div>
       </div>
-    );
+    );  
   }
 
   if (!user) {
@@ -37,10 +38,8 @@ function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode;
 function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, profile, signOut } = useAuth();
   const location = useLocation();
-
-  if (!user) {
-    return <>{children}</>;
-  }
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isPatient = profile?.role === 'patient';
   const patientTabs = [
@@ -49,9 +48,23 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     { name: 'History', path: '/patient/history', icon: History },
   ];
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  if (!user) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
@@ -61,48 +74,67 @@ function AppLayout({ children }: { children: React.ReactNode }) {
               <span className="font-semibold text-gray-900 text-lg">GlucoTrax</span>
             </div>
 
-            <div className="flex items-center gap-4">
-              {profile && (
-                <div className="text-sm text-right">
-                  <p className="font-medium text-gray-900">{profile.email}</p>
-                  <p className="text-xs text-gray-500 capitalize">{profile.role}</p>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition text-sm"
+              >
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-blue-600" />
+                </div>
+                <ChevronDown className="w-4 h-4 text-gray-600" />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <p className="text-sm font-medium text-gray-900 truncate">{profile?.email}</p>
+                    <p className="text-xs text-gray-500 capitalize mt-1">{profile?.role}</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setIsDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition text-sm font-medium"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </button>
                 </div>
               )}
-              <button
-                onClick={() => signOut()}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition text-sm font-medium"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </button>
             </div>
           </div>
 
           {isPatient && (
-            <div className="flex gap-1 -mb-px">
-              {patientTabs.map((tab) => {
-                const isActive = location.pathname === tab.path;
-                const Icon = tab.icon;
-                return (
-                  <Link
-                    key={tab.path}
-                    to={tab.path}
-                    className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
-                      isActive
-                        ? 'border-blue-600 text-blue-600 bg-blue-50/50'
-                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    {tab.name}
-                  </Link>
-                );
-              })}
+            <div className="overflow-x-auto overflow-y-hidden">
+              <div className="flex gap-1 -mb-px min-w-max">
+                {patientTabs.map((tab) => {
+                  const isActive = location.pathname === tab.path;
+                  const Icon = tab.icon;
+                  return (
+                    <Link
+                      key={tab.path}
+                      to={tab.path}
+                      className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+                        isActive
+                          ? 'border-blue-600 text-blue-600 bg-blue-50/50'
+                          : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      {tab.name}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
       </nav>
-      {children}
+      <main className="flex-1">
+        {children}
+      </main>
     </div>
   );
 }

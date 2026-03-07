@@ -96,7 +96,7 @@ export default function NewEntry() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="w-full max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4 lg:px-8">
         <button
           onClick={() => navigate('/patient/dashboard')}
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
@@ -108,7 +108,7 @@ export default function NewEntry() {
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Add Entry</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
             <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -135,25 +135,25 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-44 flex items-center justify-center">
+              <div className="w-full h-48 lg:h-56 xl:h-64 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/208512/pexels-photo-208512.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/208512/pexels-photo-208512.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Medicine"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
 
             <button
               onClick={() => setOpenModal('medicine')}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold hover:from-blue-700 hover:to-green-600 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold hover:from-blue-700 hover:to-green-600 transition-all flex items-center justify-center gap-2 mt-auto"
             >
               Log medicine intake
               <ArrowLeft className="w-5 h-5 rotate-180" />
             </button>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
             <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -182,25 +182,25 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-44 flex items-center justify-center">
+              <div className="w-full h-48 lg:h-56 xl:h-64 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&w=800"
                   alt="Weight tracking"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
 
             <button
               onClick={() => setOpenModal('weight')}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold hover:from-blue-700 hover:to-blue-600 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold hover:from-blue-700 hover:to-blue-600 transition-all flex items-center justify-center gap-2 mt-auto"
             >
               Log today's weight
               <ArrowLeft className="w-5 h-5 rotate-180" />
             </button>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
             <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -229,25 +229,25 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-44 flex items-center justify-center">
+              <div className="w-full h-48 lg:h-56 xl:h-64 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Exercise"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
 
             <button
               onClick={() => setOpenModal('exercise')}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold hover:from-blue-700 hover:to-green-600 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold hover:from-blue-700 hover:to-green-600 transition-all flex items-center justify-center gap-2 mt-auto"
             >
               Log today's activities
               <ArrowLeft className="w-5 h-5 rotate-180" />
             </button>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
             <div className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
@@ -276,18 +276,18 @@ export default function NewEntry() {
                 View History
               </button>
 
-              <div className="h-44 flex items-center justify-center">
+              <div className="w-full h-48 lg:h-56 xl:h-64 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/6823568/pexels-photo-6823568.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  src="https://images.pexels.com/photos/6823568/pexels-photo-6823568.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Side effects"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
 
             <button
               onClick={() => setOpenModal('sideEffect')}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold hover:from-blue-700 hover:to-blue-600 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold hover:from-blue-700 hover:to-blue-600 transition-all flex items-center justify-center gap-2 mt-auto"
             >
               Log today's side effect
               <ArrowLeft className="w-5 h-5 rotate-180" />
