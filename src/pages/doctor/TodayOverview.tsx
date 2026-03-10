@@ -30,7 +30,7 @@ export default function TodayOverview({
 }: TodayOverviewProps) {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white/20 p-3 rounded-lg">
@@ -64,7 +64,7 @@ export default function TodayOverview({
           <p className="text-xs text-amber-200 mt-1">Scheduled consultations</p>
         </div>
 
-        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white">
+        {/* <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="bg-white/20 p-3 rounded-lg">
               <TrendingDown className="w-6 h-6" />
@@ -73,7 +73,7 @@ export default function TodayOverview({
           <p className="text-3xl font-bold mb-1">{stats.avgBMIReduction.toFixed(1)}%</p>
           <p className="text-sm text-emerald-100">Avg BMI Reduction</p>
           <p className="text-xs text-emerald-200 mt-1">Across all patients</p>
-        </div>
+        </div> */}
 
         <div className="bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-4">
