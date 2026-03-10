@@ -39,7 +39,7 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "build.tar.gz"
-          target: "/root/smarcare"
+          target: "/tmp"
 
       - name: Extract on Server
         uses: appleboy/ssh-action@v1.0.3
@@ -48,6 +48,8 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /root/smarcare
-            rm -rf dist
+            cd /tmp
             tar -xzf build.tar.gz
+            rm -rf /var/www/smarcare/*
+            cp -r dist/* /var/www/smarcare/
+            rm -rf dist build.tar.gz
