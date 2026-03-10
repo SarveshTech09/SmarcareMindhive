@@ -6,8 +6,6 @@ import {
   Calendar,
   Award,
   AlertCircle,
-  Plus,
-  History,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -159,7 +157,7 @@ export default function PatientDashboard() {
           <p className="text-slate-600">Track your therapy progress and stay on schedule</p>
         </div>
 
-        {alerts.length > 0 && (
+        {/* {alerts.length > 0 && (
           <div className="mb-6 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl p-5 shadow-sm">
             <div className="flex items-start gap-3">
               <div className="bg-amber-100 p-2 rounded-lg">
@@ -178,7 +176,7 @@ export default function PatientDashboard() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           <div className="bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl shadow-lg p-6 text-white transform transition hover:scale-105">

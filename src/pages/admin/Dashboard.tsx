@@ -5,7 +5,7 @@ import IndiaMap from './components/IndiaMap';
 import ObesityByAgeChart from './components/ObesityByAgeChart';
 import SideEffectAnalysis from './components/SideEffectAnalysis';
 import AdherenceFunnel from './components/AdherenceFunnel';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -381,7 +381,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-white/20 p-3 rounded-lg">
@@ -394,7 +394,7 @@ export default function AdminDashboard() {
             <p className="text-xs text-blue-200 mt-1">Active in last 2 weeks</p>
           </div>
 
-          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white">
+          {/* <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-white/20 p-3 rounded-lg">
                 <TrendingUp className="w-6 h-6" />
@@ -403,7 +403,7 @@ export default function AdminDashboard() {
             <p className="text-3xl font-bold mb-1">{stats.avgBMIReduction.toFixed(1)}%</p>
             <p className="text-sm text-emerald-100">Avg BMI Reduction</p>
             <p className="text-xs text-emerald-200 mt-1">Across all patients</p>
-          </div>
+          </div> */}
 
           <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg p-6 text-white">
             <div className="flex items-center justify-between mb-4">
@@ -532,12 +532,12 @@ export default function AdminDashboard() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percentage }) => `${name}: ${percentage}%`}
+                  label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(1)}%`}
                   outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {medicationDistribution.map((entry, index) => (
+                  {medicationDistribution.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -577,7 +577,7 @@ export default function AdminDashboard() {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {genderDistribution.map((entry, index) => (
+                  {genderDistribution.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
