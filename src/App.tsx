@@ -92,9 +92,12 @@ function AppLayout({ children }: { children: React.ReactNode }) {
                     <p className="text-xs text-gray-500 capitalize mt-1">{profile?.role}</p>
                   </div>
                   <button
-                    onClick={() => {
-                      signOut();
-                      setIsDropdownOpen(false);
+                    onClick={async () => {
+                      try {
+                        await signOut();
+                        setIsDropdownOpen(false);
+                      } catch (error) {
+                      }
                     }}
                     className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition text-sm font-medium"
                   >
