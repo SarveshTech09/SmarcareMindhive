@@ -389,9 +389,9 @@ export default function AdminDashboard() {
               </div>
               <TrendingUp className="w-5 h-5" />
             </div>
-            <p className="text-3xl font-bold mb-1">{stats.activePatients}</p>
-            <p className="text-sm text-blue-100">Active Patients</p>
-            <p className="text-xs text-blue-200 mt-1">Active in last 2 weeks</p>
+            <p className="text-3xl font-bold mb-1">{stats.totalPatients}</p>
+            <p className="text-sm text-blue-100">Total Patients</p>
+            <p className="text-xs text-blue-200 mt-1">All registered patients</p>
           </div>
 
           {/* <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white">
