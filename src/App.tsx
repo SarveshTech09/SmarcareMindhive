@@ -7,8 +7,35 @@ import PatientNewEntry from './pages/patient/NewEntry';
 import PatientHistory from './pages/patient/History';
 import DoctorDashboard from './pages/doctor/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
-import { LogOut, LayoutDashboard, Plus, History, User, ChevronDown } from 'lucide-react';
+import { LogOut, LayoutDashboard, Plus, History, User, ChevronDown, Languages } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+
+// Extend Window interface for Google Translate
+declare global {
+  interface Window {
+    google: {
+      translate: {
+        TranslateElement: {
+          new (
+            options: {
+              pageLanguage: string;
+              includedLanguages?: string;
+              layout?: number;
+              autoDisplay?: boolean;
+            },
+            elementId: string
+          ): void;
+          InlineLayout: {
+            SIMPLE: number;
+            HORIZONTAL: number;
+            VERTICAL: number;
+          };
+        };
+      };
+    };
+    googleTranslateElementInit: () => void;
+  }
+}
 
 function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode; allowedRoles?: string[] }) {
   const { user, profile, loading } = useAuth();
@@ -48,6 +75,41 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     { name: 'History', path: '/patient/history', icon: History },
   ];
 
+  // Initialize Google Translate
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false,
+        includedLanguages: '' // Empty means all languages
+      },
+      "google_translate_element"
+    );
+  };
+
+  useEffect(() => {
+    // Check if script already exists to prevent duplicates
+    if (document.querySelector('script[src*="translate.google.com"]')) {
+      return;
+    }
+
+    const addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    window.googleTranslateElementInit = googleTranslateElementInit;
+
+    // Set dropdown to English after it loads
+    setTimeout(() => {
+      const selectElement = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+      if (selectElement) {
+        selectElement.value = '';
+      }
+    }, 1000);
+  }, []);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -74,38 +136,47 @@ function AppLayout({ children }: { children: React.ReactNode }) {
               <span className="font-semibold text-gray-900 text-lg">GlucoTrax</span>
             </div>
 
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition text-sm"
-              >
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4 text-blue-600" />
-                </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
-              </button>
+            <div className="flex items-center gap-4">
+              {/* Google Translate */}
+              <div className="flex items-center gap-2">
+                <Languages className="w-5 h-5 text-gray-600" />
+                <div id="google_translate_element"></div>
+              </div>
 
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                  <div className="px-4 py-3 border-b border-gray-100">
-                    <p className="text-sm font-medium text-gray-900 truncate">{profile?.email}</p>
-                    <p className="text-xs text-gray-500 capitalize mt-1">{profile?.role}</p>
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition text-sm"
+                >
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <User className="w-4 h-4 text-blue-600" />
                   </div>
-                  <button
-                    onClick={async () => {
-                      try {
-                        await signOut();
-                        setIsDropdownOpen(false);
-                      } catch (error) {
-                      }
-                    }}
-                    className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition text-sm font-medium"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Sign Out
-                  </button>
-                </div>
-              )}
+                  <ChevronDown className="w-4 h-4 text-gray-600" />
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-medium text-gray-900 truncate">{profile?.email}</p>
+                      <p className="text-xs text-gray-500 capitalize mt-1">{profile?.role}</p>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        try {
+                          await signOut();
+                          setIsDropdownOpen(false);
+                        } catch (error) {
+                          console.error('Sign out failed:', error);
+                        }
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition text-sm font-medium"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

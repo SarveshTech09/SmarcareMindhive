@@ -4,6 +4,86 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Google Translate Widget - Show only ONE dropdown */
+#google_translate_element {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Hide all Google branding */
+.goog-te-gadget {
+  font-family: inherit !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+}
+
+.goog-te-gadget img,
+.goog-te-gadget-icon,
+.goog-te-gadget > span,
+.goog-te-gadget .goog-te-gadget-simple span {
+  display: none !important;
+}
+
+.goog-te-gadget .goog-te-gadget-simple {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Style ONLY the select dropdown */
+.goog-te-combo {
+  margin: 0 !important;
+  padding: 8px 32px 8px 12px !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+  background-color: white !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  min-width: 150px !important;
+  height: 38px !important;
+}
+
+.goog-te-combo:hover {
+  border-color: #d1d5db !important;
+  background-color: #f9fafb !important;
+}
+
+.goog-te-combo:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Hide Google Translate top banner completely */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.skiptranslate,
+body > .skiptranslate {
+  display: none !important;
+}
+
+/* Fix body positioning */
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+body.translated-ltr,
+body.translated-rtl {
+  margin-top: 0 !important;
+}
+
+/* Maintain font styling after translation */
+.translated-ltr,
+.translated-rtl {
+  font-family: inherit !important;
+}
+
 @layer base {
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
